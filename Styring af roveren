@@ -1,6 +1,6 @@
 
-const int VRx = A0; // Joystick X-akse
-const int VRy = A1; // Joystick Y-akse
+const int VRx = A0;
+const int VRy = A1;
 
 const int MotorA_IA = 7;
 const int MotorA_IB = 6;
