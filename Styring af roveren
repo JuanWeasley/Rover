@@ -1,0 +1,83 @@
+
+const int VRx = A0; // Joystick X-akse
+const int VRy = A1; // Joystick Y-akse
+
+const int MotorA_IA = 7;
+const int MotorA_IB = 6;
+const int MotorB_IA = 5;
+const int MotorB_IB = 4;
+
+const int deadzone = 100;
+
+void setup() {
+
+  pinMode(MotorA_IA, OUTPUT);
+  pinMode(MotorA_IB, OUTPUT);
+  pinMode(MotorB_IA, OUTPUT);
+  pinMode(MotorB_IB, OUTPUT);
+
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int xValue = analogRead(VRx) - 512; // Centerér værdien omkring 0
+  int yValue = analogRead(VRy) - 512;
+
+  Serial.print("X: ");
+  Serial.print(xValue);
+  Serial.print(" | Y: ");
+  Serial.println(yValue);
+
+ 
+  if (abs(xValue) < deadzone && abs(yValue) < deadzone) {
+    stopMotors(); // 
+  }
+  else if (yValue > deadzone) {
+    driveForward();
+  }
+  else if (yValue < -deadzone) {
+    driveBackward();
+  }
+  else if (xValue > deadzone) {
+    turnRight();
+  }
+  else if (xValue < -deadzone) {
+    turnLeft();
+  }
+}
+
+void driveForward() {
+  digitalWrite(MotorA_IA, HIGH);
+  digitalWrite(MotorA_IB, LOW);
+  digitalWrite(MotorB_IA, HIGH);
+  digitalWrite(MotorB_IB, LOW);
+}
+
+void driveBackward() {
+  digitalWrite(MotorA_IA, LOW);
+  digitalWrite(MotorA_IB, HIGH);
+  digitalWrite(MotorB_IA, LOW);
+  digitalWrite(MotorB_IB, HIGH);
+}
+
+void turnLeft() {
+  digitalWrite(MotorA_IA, LOW);
+  digitalWrite(MotorA_IB, HIGH);
+  digitalWrite(MotorB_IA, HIGH);
+  digitalWrite(MotorB_IB, LOW);
+}
+
+void turnRight() {
+  digitalWrite(MotorA_IA, HIGH);
+  digitalWrite(MotorA_IB, LOW);
+  digitalWrite(MotorB_IA, LOW);
+  digitalWrite(MotorB_IB, HIGH);
+}
+
+void stopMotors() {
+  digitalWrite(MotorA_IA, LOW);
+  digitalWrite(MotorA_IB, LOW);
+  digitalWrite(MotorB_IA, LOW);
+  digitalWrite(MotorB_IB, LOW);
+}
