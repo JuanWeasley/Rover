@@ -21,7 +21,7 @@ void setup() {
 }
 
 void loop() {
-  int xValue = analogRead(VRx) - 512; // Centerér værdien omkring 0
+  int xValue = analogRead(VRx) - 512;
   int yValue = analogRead(VRy) - 512;
 
   Serial.print("X: ");
